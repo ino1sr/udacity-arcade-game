@@ -52,14 +52,24 @@ var Player = function(x, y) {
 }
 
 Player.prototype.update = function() {
-
+    // Make sure the player doesn't go off the canvas.
+    if (this.x < 0) {
+        this.x = 0;
+    }
+    if (this.x > 400) {
+        this.x = 400;
+    }
+    if (this.y < -15) {
+        this.y = -15;
+    }
+    if (this.y > 400) {
+        this.y = 400;
+    }
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
-Player.prototype.handleInput = function() {
 
 Player.prototype.handleInput = function(key) {
     switch (key) {
@@ -84,7 +94,7 @@ Player.prototype.handleInput = function(key) {
 // Place the player object in a variable called player
 
 var allEnemies = [new Enemy(-100, 62), new Enemy(-75, 145), new Enemy(-150, 228)];
-var player = new Player(200, 380);
+var player = new Player(200, 400);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
