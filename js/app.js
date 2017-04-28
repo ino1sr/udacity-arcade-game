@@ -18,7 +18,7 @@ var Rect = function (x1, y1, x2, y2) {
     this.y1 = y1;
     this.x2 = x2;
     this.y2 = y2;
-}
+};
 
 //　Move the hitbox according to the object's move
 Rect.prototype.moveBy = function(x, y) {
@@ -26,13 +26,13 @@ Rect.prototype.moveBy = function(x, y) {
                     this.y1 + y,
                     this.x2 + x,
                     this.y2 + y);
-}
+};
 
 // Check if the hitboxes overlap
 Rect.prototype.overlaps = function(other) {
     return (this.x1 < other.x2 && this.x2 > other.x1 &&
             this.y1 < other.y2 && this.y2 > other.y1);
-}
+};
 
 // Enemy class
 var Enemy = function(x, y) {
@@ -64,10 +64,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
+// Player class
 var Player = function(x, y) {
     this.sprite = 'images/char-boy.png';
     this.startX = x;
@@ -75,7 +72,7 @@ var Player = function(x, y) {
     this.x = x;
     this.y = y;
     this.hitbox = new Rect(18, 63, 84, 139);
-}
+};
 
 Player.prototype.update = function() {
     // Make sure the player doesn't go off the canvas.
@@ -99,12 +96,12 @@ Player.prototype.hit = function(obj) {
     var b = obj.hitbox.moveBy(obj.x, obj.y);
 
     return a.overlaps(b);
-}
+};
 
 Player.prototype.reset = function() {
     this.x = this.startX;
     this.y = this.startY;
-}
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
