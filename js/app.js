@@ -12,12 +12,35 @@ function randomIntWithinRange(a, b) {
     return a - Math.round(random);
 }
 
+// Rect class which defines objects' hitboxes
+var Rect = function (x1, y1, x2, y2) {
+    this.x1 = x1;
+    this.y1 = y1;
+    this.x2 = x2;
+    this.y2 = y2;
+}
+
+//　Move the hitbox according to the object's move
+Rect.prototype.moveBy = function(x, y) {
+    return new Rect(this.x1 + x,
+                    this.y1 + y,
+                    this.x2 + x,
+                    this.y2 + y);
+}
+
+// Check if the hitboxes overlap
+Rect.prototype.overlaps = function(other) {
+    return (this.x1 < other.x2 && this.x2 > other.x1 &&
+            this.y1 < other.y2 && this.y2 > other.y1);
+}
+
 // Enemy class
 var Enemy = function(x, y) {
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
     this.speed = randomSpeed();
+    this.hitbox = new Rect(13, 77, 101, 143);
 };
 
 // Update the enemy's position, required method for game
@@ -47,8 +70,11 @@ Enemy.prototype.render = function() {
 
 var Player = function(x, y) {
     this.sprite = 'images/char-boy.png';
+    this.startX = x;
+    this.startY = y;
     this.x = x;
     this.y = y;
+    this.hitbox = new Rect(18, 63, 84, 139);
 }
 
 Player.prototype.update = function() {
@@ -67,6 +93,19 @@ Player.prototype.update = function() {
     }
 };
 
+// Check if the player collides with enemy
+Player.prototype.hit = function(obj) {
+    var a = this.hitbox.moveBy(this.x, this.y);
+    var b = obj.hitbox.moveBy(obj.x, obj.y);
+
+    return a.overlaps(b);
+}
+
+Player.prototype.reset = function() {
+    this.x = this.startX;
+    this.y = this.startY;
+}
+
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -74,13 +113,13 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
-            this.x -= 100;
+            this.x -= 101;
             break;
         case 'up':
             this.y -= 83;
             break;
         case 'right':
-            this.x += 100;
+            this.x += 101;
             break;
         case 'down':
             this.y += 83;
