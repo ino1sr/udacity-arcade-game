@@ -138,6 +138,9 @@ Player.prototype.handleInput = function(key) {
         case 'down':
             this.y += 83;
             break;
+        case 'space':
+            this.currentLives = this.maxLives;
+            break;
         default:
             break;
     }
@@ -156,7 +159,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        32: 'space'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);

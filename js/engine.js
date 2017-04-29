@@ -101,7 +101,6 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             if (player.hit(enemy)) {
                 player.reset();
-                reset();
             }
         });
     }
@@ -112,41 +111,49 @@ var Engine = (function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
+        clear();
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/grass-block.png',   // Row grass
-                'images/stone-block.png',   // Row 1 of 2 of stone
-                'images/stone-block.png',   // Row 2 of 2 of stone
-                'images/grass-block.png',   // Row grass
-                'images/stone-block.png',   // Row 1 of 2 of stone
-                'images/stone-block.png',   // Row 2 of 2 of stone
-                'images/grass-block.png'    // Row grass
-            ],
-            numRows = 8,
-            numCols = 7,
-            row, col;
+        if (player.currentLives > 0) {
+            var rowImages = [
+                    'images/water-block.png',   // Top row is water
+                    'images/grass-block.png',   // Row grass
+                    'images/stone-block.png',   // Row 1 of 2 of stone
+                    'images/stone-block.png',   // Row 2 of 2 of stone
+                    'images/grass-block.png',   // Row grass
+                    'images/stone-block.png',   // Row 1 of 2 of stone
+                    'images/stone-block.png',   // Row 2 of 2 of stone
+                    'images/grass-block.png'    // Row grass
+                ],
+                numRows = 8,
+                numCols = 7,
+                row, col;
 
-        /* Loop through the number of rows and columns we've defined above
-         * and, using the rowImages array, draw the correct image for that
-         * portion of the "grid"
-         */
-        for (row = 0; row < numRows; row++) {
-            for (col = 0; col < numCols; col++) {
-                /* The drawImage function of the canvas' context element
-                 * requires 3 parameters: the image to draw, the x coordinate
-                 * to start drawing and the y coordinate to start drawing.
-                 * We're using our Resources helpers to refer to our images
-                 * so that we get the benefits of caching these images, since
-                 * we're using them over and over.
-                 */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+            /* Loop through the number of rows and columns we've defined above
+             * and, using the rowImages array, draw the correct image for that
+             * portion of the "grid"
+             */
+            for (row = 0; row < numRows; row++) {
+                for (col = 0; col < numCols; col++) {
+                    /* The drawImage function of the canvas' context element
+                     * requires 3 parameters: the image to draw, the x coordinate
+                     * to start drawing and the y coordinate to start drawing.
+                     * We're using our Resources helpers to refer to our images
+                     * so that we get the benefits of caching these images, since
+                     * we're using them over and over.
+                     */
+                    ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                }
             }
-        }
 
-        renderEntities();
+            renderEntities();
+
+        } else {
+
+            gameOver();
+
+        }
     }
 
     /* This function is called by the render function and is called on each game
@@ -169,7 +176,22 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
+    }
+
+    // Clear the canvas
+    function clear() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function gameOver() {
+        ctx.fillStyle = '#222';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.font = '40px "Press Start 2P"';
+        ctx.fillText('Game Over', 350, 350);
+        ctx.font = '20px "Press Start 2P"';
+        ctx.fillText('Press the Spacebar to restart', 350, 400);
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -192,4 +214,3 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
-})(this);
