@@ -101,6 +101,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             if (player.hit(enemy)) {
                 player.reset();
+                reset();
             }
         });
     }
@@ -166,7 +167,7 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -178,7 +179,9 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Heart.png',
+        'images/Heart-lost.png'
     ]);
     Resources.onReady(init);
 

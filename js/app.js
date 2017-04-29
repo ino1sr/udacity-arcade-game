@@ -67,11 +67,15 @@ Enemy.prototype.render = function() {
 // Player class
 var Player = function(x, y) {
     this.sprite = 'images/char-boy.png';
+    this.heart = 'images/Heart.png';
+    this.lostHeart = 'images/Heart-lost.png';
     this.startX = x;
     this.startY = y;
     this.x = x;
     this.y = y;
     this.hitbox = new Rect(18, 63, 84, 139);
+    this.maxLives = 4;
+    this.currentLives = this.maxLives;
 };
 
 Player.prototype.update = function() {
@@ -101,10 +105,23 @@ Player.prototype.hit = function(obj) {
 Player.prototype.reset = function() {
     this.x = this.startX;
     this.y = this.startY;
+    this.currentLives--;
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    // Life counter
+    var x = 0;
+    var space = 35;
+    for (var i = 0; i < this.currentLives; i++) {
+        ctx.drawImage(Resources.get(this.heart), x, 0, 30, 50);
+        x += space;
+    }
+    for (var j = 0; j < (this.maxLives - this.currentLives); j++) {
+        ctx.drawImage(Resources.get(this.lostHeart), x, 0, 30, 50)
+        x += space;
+    }
 };
 
 Player.prototype.handleInput = function(key) {
