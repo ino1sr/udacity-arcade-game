@@ -14,6 +14,18 @@
  * a little simpler to work with.
  */
 
+// Load google font
+window.WebFontConfig = {
+    google: { families: ['Press Start 2P'] },
+    active: function() {Engine(window)},
+};
+(function() {
+    var wf = document.createElement("script");
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+    wf.async = 'true';
+    document.head.appendChild(wf);
+})();
+
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -214,3 +226,4 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+});
