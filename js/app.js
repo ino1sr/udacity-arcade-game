@@ -53,7 +53,7 @@ Enemy.prototype.update = function(dt) {
 
     // Update the enemy's position and speed
     // when it goes off to the right side of the canvas.
-    if (this.x > 550) {
+    if (this.x > 750) {
         this.x = randomIntWithinRange(-100, -200);
         this.speed = randomSpeed();
     }
@@ -83,14 +83,14 @@ Player.prototype.update = function() {
     if (this.x < 0) {
         this.x = 0;
     }
-    if (this.x > 400) {
-        this.x = 400;
+    if (this.x > 606) {
+        this.x = 606;
     }
-    if (this.y < -15) {
-        this.y = -15;
+    if (this.y < 68) {
+        this.y = 68;
     }
-    if (this.y > 400) {
-        this.y = 400;
+    if (this.y > 566) {
+        this.y = 566;
     }
 };
 
@@ -146,8 +146,8 @@ Player.prototype.handleInput = function(key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var allEnemies = [new Enemy(-100, 62), new Enemy(-75, 145), new Enemy(-150, 228)];
-var player = new Player(200, 400);
+var allEnemies = [new Enemy(-100, 145), new Enemy(-75, 228), new Enemy(-150, 394), new Enemy(-100, 477)];
+var player = new Player(303, 566);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
