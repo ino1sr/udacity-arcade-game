@@ -12,6 +12,12 @@ function randomIntWithinRange(a, b) {
     return a - Math.round(random);
 }
 
+// Pick a random element from an array
+function randomElement(arr) {
+    var idx = randomIntWithinRange(0, arr.length - 1);
+    return arr[idx];
+}
+
 // Rect class which defines objects' hitboxes
 var Rect = function (x1, y1, x2, y2) {
     this.x1 = x1;
@@ -172,6 +178,36 @@ Rock.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Gem class
+var Gem = function(col, row) {
+    this.gemType = {point: 10, sprite: 'images/GemGreen-small.png'};
+    this.x = col * 101;
+    this.y = (row * 83) - 21;
+    this.hitbox = new Rect(16, 73, 86, 150);
+};
+
+var gemTypes = [
+    {point: 10, sprite: 'images/GemGreen-small.png'},
+    {point: 20, sprite: 'images/GemBlue-small.png'},
+    {point: 50, sprite: 'images/GemOrange-small.png'}
+];
+
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.gemType.sprite), this.x, this.y);
+};
+
+Gem.prototype.randomPopUp = function() {
+    var gemPopRows = [2, 3, 5, 6];
+    var gemPopCols = [0, 1, 2, 3, 4, 5, 6];
+
+    var randomRow = randomElement(gemPopRows);
+    var randomCol = randomElement(gemPopCols);
+
+    this.x = randomCol * 101;
+    this.y = (randomRow * 83) - 21;
+
+    this.gemType = randomElement(gemTypes);
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -194,6 +230,7 @@ var allRocks = [
                 new Rock(1, 7),
                 new Rock(5, 7)
                 ];
+var gem = new Gem(1, 2);
 var player = new Player(303, 566);
 
 // This listens for key presses and sends the keys to your
