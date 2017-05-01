@@ -73,6 +73,8 @@ var Player = function(x, y) {
     this.startY = y;
     this.x = x;
     this.y = y;
+    this.previousX = x;
+    this.previousY = y;
     this.hitbox = new Rect(18, 63, 84, 139);
     this.maxLives = 4;
     this.currentLives = this.maxLives;
@@ -108,6 +110,16 @@ Player.prototype.reset = function() {
     this.currentLives--;
 };
 
+Player.prototype.setPreviousPosition = function() {
+    this.previousX = this.x;
+    this.previousY = this.y;
+}
+
+Player.prototype.stay = function() {
+    this.x = this.previousX;
+    this.y = this.previousY;
+};
+
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
@@ -125,6 +137,8 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(key) {
+    this.setPreviousPosition();
+
     switch (key) {
         case 'left':
             this.x -= 101;
@@ -145,11 +159,41 @@ Player.prototype.handleInput = function(key) {
             break;
     }
 };
+
+// Rock class
+var Rock = function(row, col) {
+    this.sprite = 'images/Rock.png';
+    this.x = row * 101;
+    this.y = (col * 83) - 21;
+    this.hitbox = new Rect(7, 70, 95, 150);
+};
+
+Rock.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var allEnemies = [new Enemy(-100, 145), new Enemy(-75, 228), new Enemy(-150, 394), new Enemy(-100, 477)];
+var allEnemies = [
+                new Enemy(-100, 145),
+                new Enemy(-75, 228),
+                new Enemy(-150, 394),
+                new Enemy(-100, 477)
+                ];
+var allRocks = [
+                new Rock(0, 1),
+                new Rock(2, 1),
+                new Rock(6, 1),
+                new Rock(1, 4),
+                new Rock(4, 4),
+                new Rock(5, 4),
+                new Rock(0, 7),
+                new Rock(1, 7),
+                new Rock(5, 7)
+                ];
 var player = new Player(303, 566);
 
 // This listens for key presses and sends the keys to your

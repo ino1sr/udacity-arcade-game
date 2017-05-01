@@ -115,6 +115,12 @@ var Engine = (function(global) {
                 player.reset();
             }
         });
+
+        allRocks.forEach(function(rock){
+            if (player.hit(rock)) {
+                player.stay();
+            }
+        });
     }
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
@@ -180,6 +186,10 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+        allRocks.forEach(function(rock) {
+            rock.render();
+        });
+
         player.render();
     }
 
@@ -217,7 +227,8 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-boy.png',
         'images/Heart.png',
-        'images/Heart-lost.png'
+        'images/Heart-lost.png',
+        'images/Rock.png'
     ]);
     Resources.onReady(init);
 
