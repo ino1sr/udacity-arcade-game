@@ -161,10 +161,10 @@ Player.prototype.handleInput = function(key) {
 };
 
 // Rock class
-var Rock = function(row, col) {
+var Rock = function(col, row) {
     this.sprite = 'images/Rock.png';
-    this.x = row * 101;
-    this.y = (col * 83) - 21;
+    this.x = col * 101;
+    this.y = (row * 83) - 21;
     this.hitbox = new Rect(7, 70, 95, 150);
 };
 
