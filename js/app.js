@@ -247,22 +247,22 @@ Gem.prototype.randomPopUp = function() {
 // Place the player object in a variable called player
 
 var allEnemies = [
-                new Enemy(-100, 145, 'right'),
-                new Enemy(775, 228, 'left'),
-                new Enemy(-150, 394, 'right'),
-                new Enemy(800, 477, 'left')
-                ];
+    new Enemy(-100, 145, 'right'),
+    new Enemy(775, 228, 'left'),
+    new Enemy(-150, 394, 'right'),
+    new Enemy(800, 477, 'left')
+];
 var allRocks = [
-                new Rock(0, 1),
-                new Rock(2, 1),
-                new Rock(6, 1),
-                new Rock(1, 4),
-                new Rock(4, 4),
-                new Rock(5, 4),
-                new Rock(0, 7),
-                new Rock(1, 7),
-                new Rock(5, 7)
-                ];
+    new Rock(0, 1),
+    new Rock(2, 1),
+    new Rock(6, 1),
+    new Rock(1, 4),
+    new Rock(4, 4),
+    new Rock(5, 4),
+    new Rock(0, 7),
+    new Rock(1, 7),
+    new Rock(5, 7)
+];
 var gem = new Gem(1, 2);
 var player = new Player(303, 566);
 
