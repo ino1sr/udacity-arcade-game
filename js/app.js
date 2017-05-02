@@ -84,6 +84,7 @@ var Player = function(x, y) {
     this.hitbox = new Rect(18, 63, 84, 139);
     this.maxLives = 4;
     this.currentLives = this.maxLives;
+    this.score = 0;
 };
 
 Player.prototype.update = function() {
@@ -126,6 +127,10 @@ Player.prototype.stay = function() {
     this.y = this.previousY;
 };
 
+Player.prototype.scoreUpdate = function(gem) {
+    this.score += gem.gemType.point;
+};
+
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
@@ -140,6 +145,13 @@ Player.prototype.render = function() {
         ctx.drawImage(Resources.get(this.lostHeart), x, 0, 30, 50)
         x += space;
     }
+
+    // Score counter
+    var scoreText = 'Score: ' + this.score;
+    ctx.fillStyle = '#222';
+    ctx.textAlign = 'right';
+    ctx.font = '20px "Press Start 2P"';
+    ctx.fillText(scoreText, 707, 40);
 };
 
 Player.prototype.handleInput = function(key) {
@@ -160,6 +172,7 @@ Player.prototype.handleInput = function(key) {
             break;
         case 'space':
             this.currentLives = this.maxLives;
+            this.score = 0;
             break;
         default:
             break;

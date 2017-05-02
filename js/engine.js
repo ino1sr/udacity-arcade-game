@@ -123,6 +123,7 @@ var Engine = (function(global) {
         });
 
         if (player.hit(gem)) {
+            player.scoreUpdate(gem);
             gem.randomPopUp();
         }
     }
@@ -176,6 +177,10 @@ var Engine = (function(global) {
             gameOver();
 
         }
+
+        if (player.score >= 100) {
+            winGame();
+        }
     }
 
     /* This function is called by the render function and is called on each game
@@ -212,6 +217,8 @@ var Engine = (function(global) {
     }
 
     function gameOver() {
+        player.score = 0;
+
         ctx.fillStyle = '#222';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#fff';
@@ -220,6 +227,17 @@ var Engine = (function(global) {
         ctx.fillText('Game Over', 350, 350);
         ctx.font = '20px "Press Start 2P"';
         ctx.fillText('Press the Spacebar to restart', 350, 400);
+    }
+
+    function winGame() {
+        ctx.fillStyle = '#222';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.font = '40px "Press Start 2P"';
+        ctx.fillText('You Win!', 350, 350);
+        ctx.font = '20px "Press Start 2P"';
+        ctx.fillText('Press the Spacebar to replay', 350, 400);
     }
 
     /* Go ahead and load all of the images we know we're going to need to
