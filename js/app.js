@@ -105,6 +105,7 @@ var Player = function(x, y) {
     this.maxLives = 4;
     this.currentLives = this.maxLives;
     this.score = 0;
+    this.isStarted = false;
 };
 
 Player.prototype.update = function() {
@@ -191,8 +192,12 @@ Player.prototype.handleInput = function(key) {
             this.y += 83;
             break;
         case 'space':
-            this.currentLives = this.maxLives;
-            this.score = 0;
+            if (!this.isStarted) {
+                this.isStarted = true;
+            } else if (this.currentLives === 0 || this.score >= 100) {
+                this.currentLives = this.maxLives;
+                this.score = 0;
+            }
             break;
         default:
             break;

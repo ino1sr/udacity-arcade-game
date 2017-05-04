@@ -138,48 +138,22 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        if (player.currentLives > 0) {
-            var rowImages = [
-                    'images/water-block.png',   // Top row is water
-                    'images/grass-block.png',   // Row grass
-                    'images/stone-block.png',   // Row 1 of 2 of stone
-                    'images/stone-block.png',   // Row 2 of 2 of stone
-                    'images/grass-block.png',   // Row grass
-                    'images/stone-block.png',   // Row 1 of 2 of stone
-                    'images/stone-block.png',   // Row 2 of 2 of stone
-                    'images/grass-block.png'    // Row grass
-                ],
-                numRows = 8,
-                numCols = 7,
-                row, col;
+        if (!player.isStarted) {
 
-            /* Loop through the number of rows and columns we've defined above
-             * and, using the rowImages array, draw the correct image for that
-             * portion of the "grid"
-             */
-            for (row = 0; row < numRows; row++) {
-                for (col = 0; col < numCols; col++) {
-                    /* The drawImage function of the canvas' context element
-                     * requires 3 parameters: the image to draw, the x coordinate
-                     * to start drawing and the y coordinate to start drawing.
-                     * We're using our Resources helpers to refer to our images
-                     * so that we get the benefits of caching these images, since
-                     * we're using them over and over.
-                     */
-                    ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
-                }
-            }
+            welcomeScreen();
 
-            renderEntities();
+        } else if (player.score >= 100) {
+
+            winScreen();
+
+        } else if (player.currentLives > 0) {
+
+            gameScreen();
 
         } else {
 
-            gameOver();
+            gameOverScreen();
 
-        }
-
-        if (player.score >= 100) {
-            winGame();
         }
     }
 
@@ -216,25 +190,76 @@ var Engine = (function(global) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    function gameOver() {
+    function welcomeScreen() {
+        ctx.fillStyle = '#222';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.font = '36px "Press Start 2P"';
+        ctx.fillText('Arcade Game Clone', 350, 230);
+        ctx.font = '16px "Press Start 2P"';
+        ctx.fillText('Avoid bugs & Collect gems', 350, 330);
+        ctx.fillText('Gain 500 pts to Win', 350, 370);
+        ctx.fillText('Move with the arrow keys', 350, 410);
+        ctx.font = '20px "Press Start 2P"';
+        ctx.fillText('Press the Spacebar to start', 350, 550);
+    }
+
+    function gameScreen() {
+        var rowImages = [
+                'images/water-block.png', // Top row is water
+                'images/grass-block.png', // Row grass
+                'images/stone-block.png', // Row 1 of 2 of stone
+                'images/stone-block.png', // Row 2 of 2 of stone
+                'images/grass-block.png', // Row grass
+                'images/stone-block.png', // Row 1 of 2 of stone
+                'images/stone-block.png', // Row 2 of 2 of stone
+                'images/grass-block.png' // Row grass
+            ],
+            numRows = 8,
+            numCols = 7,
+            row, col;
+
+        /* Loop through the number of rows and columns we've defined above
+         * and, using the rowImages array, draw the correct image for that
+         * portion of the "grid"
+         */
+        for (row = 0; row < numRows; row++) {
+            for (col = 0; col < numCols; col++) {
+                /* The drawImage function of the canvas' context element
+                 * requires 3 parameters: the image to draw, the x coordinate
+                 * to start drawing and the y coordinate to start drawing.
+                 * We're using our Resources helpers to refer to our images
+                 * so that we get the benefits of caching these images, since
+                 * we're using them over and over.
+                 */
+                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+            }
+        }
+
+        renderEntities();
+
+    }
+
+    function gameOverScreen() {
         player.score = 0;
 
         ctx.fillStyle = '#222';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#fff';
         ctx.textAlign = 'center';
-        ctx.font = '40px "Press Start 2P"';
+        ctx.font = '36px "Press Start 2P"';
         ctx.fillText('Game Over', 350, 350);
         ctx.font = '20px "Press Start 2P"';
         ctx.fillText('Press the Spacebar to restart', 350, 400);
     }
 
-    function winGame() {
+    function winScreen() {
         ctx.fillStyle = '#222';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#fff';
         ctx.textAlign = 'center';
-        ctx.font = '40px "Press Start 2P"';
+        ctx.font = '36px "Press Start 2P"';
         ctx.fillText('You Win!', 350, 350);
         ctx.font = '20px "Press Start 2P"';
         ctx.fillText('Press the Spacebar to replay', 350, 400);
