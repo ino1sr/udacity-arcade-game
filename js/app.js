@@ -1,6 +1,6 @@
 // Pick a randomized speed for enemies
 function randomSpeed() {
-    var rand = Math.floor(Math.random()*4) + 1;
+    var rand = Math.floor(Math.random() * 4) + 1;
     var speed = 240 / rand;
     return speed;
 }
@@ -19,7 +19,7 @@ function randomElement(arr) {
 }
 
 // Rect class which defines objects' hitboxes
-var Rect = function (x1, y1, x2, y2) {
+var Rect = function(x1, y1, x2, y2) {
     this.x1 = x1;
     this.y1 = y1;
     this.x2 = x2;
@@ -28,16 +28,17 @@ var Rect = function (x1, y1, x2, y2) {
 
 //　Move the hitbox according to the object's move
 Rect.prototype.moveBy = function(x, y) {
-    return new Rect(this.x1 + x,
-                    this.y1 + y,
-                    this.x2 + x,
-                    this.y2 + y);
+    return new Rect(
+        this.x1 + x,
+        this.y1 + y,
+        this.x2 + x,
+        this.y2 + y);
 };
 
 // Check if the hitboxes overlap
 Rect.prototype.overlaps = function(other) {
     return (this.x1 < other.x2 && this.x2 > other.x1 &&
-            this.y1 < other.y2 && this.y2 > other.y1);
+        this.y1 < other.y2 && this.y2 > other.y1);
 };
 
 // Enemy class
@@ -70,7 +71,7 @@ Enemy.prototype.update = function(dt) {
             this.x += this.speed * dt;
             break;
         case 'left':
-            this.x -= this.speed *dt;
+            this.x -= this.speed * dt;
             break;
     }
 
@@ -141,7 +142,7 @@ Player.prototype.reset = function() {
 Player.prototype.setPreviousPosition = function() {
     this.previousX = this.x;
     this.previousY = this.y;
-}
+};
 
 Player.prototype.stay = function() {
     this.x = this.previousX;
@@ -218,16 +219,16 @@ Rock.prototype.render = function() {
 
 // Gem class
 var Gem = function(col, row) {
-    this.gemType = {point: 10, sprite: 'images/GemGreen-small.png'};
+    this.gemType = { point: 10, sprite: 'images/GemGreen-small.png' };
     this.x = col * 101;
     this.y = (row * 83) - 21;
     this.hitbox = new Rect(16, 73, 86, 150);
 };
 
 var gemTypes = [
-    {point: 10, sprite: 'images/GemGreen-small.png'},
-    {point: 20, sprite: 'images/GemBlue-small.png'},
-    {point: 50, sprite: 'images/GemOrange-small.png'}
+    { point: 10, sprite: 'images/GemGreen-small.png' },
+    { point: 20, sprite: 'images/GemBlue-small.png' },
+    { point: 50, sprite: 'images/GemOrange-small.png' }
 ];
 
 Gem.prototype.render = function() {

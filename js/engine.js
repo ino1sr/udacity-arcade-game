@@ -17,7 +17,7 @@
 // Load google font
 window.WebFontConfig = {
     google: { families: ['Press Start 2P'] },
-    active: function() {Engine(window)},
+    active: function() { Engine(window) }
 };
 (function() {
     var wf = document.createElement("script");
@@ -116,7 +116,7 @@ var Engine = (function(global) {
             }
         });
 
-        allRocks.forEach(function(rock){
+        allRocks.forEach(function(rock) {
             if (player.hit(rock)) {
                 player.stay();
             }
@@ -182,8 +182,7 @@ var Engine = (function(global) {
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
-    function reset() {
-    }
+    function reset() {}
 
     // Clear the canvas
     function clear() {
