@@ -1,7 +1,7 @@
 // Pick a randomized speed for enemies
 function randomSpeed() {
     var rand = Math.floor(Math.random() * 4) + 1;
-    var speed = 240 / rand;
+    var speed = 360 / rand;
     return speed;
 }
 

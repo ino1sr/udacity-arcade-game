@@ -142,7 +142,7 @@ var Engine = (function(global) {
 
             welcomeScreen();
 
-        } else if (player.score >= 100) {
+        } else if (player.score >= 500) {
 
             winScreen();
 
