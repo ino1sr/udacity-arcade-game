@@ -20,7 +20,7 @@ window.WebFontConfig = {
     active: function() { Engine(window) }
 };
 (function() {
-    var wf = document.createElement("script");
+    var wf = document.createElement('script');
     wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
     wf.async = 'true';
     document.head.appendChild(wf);
@@ -109,6 +109,9 @@ var Engine = (function(global) {
         player.update();
     }
 
+    /* Check the collissions between the player and all the objects, then
+     * update the game scenario properly.
+     */
     function checkCollisions() {
         allEnemies.forEach(function(enemy) {
             if (player.hit(enemy)) {
@@ -127,17 +130,13 @@ var Engine = (function(global) {
             gem.randomPopUp();
         }
     }
-    /* This function initially draws the "game level", it will then call
-     * the renderEntities function. Remember, this function is called every
-     * game tick (or loop of the game engine) because that's how games work -
-     * they are flipbooks creating the illusion of animation but in reality
-     * they are just drawing the entire screen over and over.
+
+    /* This function handles the drawing of the game screen. First, clear the
+     * canvas, then render the proper screen depending on the game stage.
      */
     function render() {
         clear();
-        /* This array holds the relative URL to the image used
-         * for that particular row of the game level.
-         */
+
         if (!player.isStarted) {
 
             welcomeScreen();
@@ -189,6 +188,7 @@ var Engine = (function(global) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    // Draw the welcome screen
     function welcomeScreen() {
         ctx.fillStyle = '#222';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -204,7 +204,13 @@ var Engine = (function(global) {
         ctx.fillText('Press the Spacebar to start', 350, 550);
     }
 
+    /* This function initially draws the "game level", it will then call
+     * the renderEntities function.
+     */
     function gameScreen() {
+        /* This array holds the relative URL to the image used
+         * for that particular row of the game level.
+         */
         var rowImages = [
                 'images/water-block.png', // Top row is water
                 'images/grass-block.png', // Row grass
@@ -240,6 +246,7 @@ var Engine = (function(global) {
 
     }
 
+    // Draw the game over screen
     function gameOverScreen() {
         player.score = 0;
 
@@ -253,6 +260,7 @@ var Engine = (function(global) {
         ctx.fillText('Press the Spacebar to restart', 350, 400);
     }
 
+    // Draw the win screen
     function winScreen() {
         ctx.fillStyle = '#222';
         ctx.fillRect(0, 0, canvas.width, canvas.height);

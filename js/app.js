@@ -18,7 +18,7 @@ function randomElement(arr) {
     return arr[idx];
 }
 
-// Rect class which defines objects' hitboxes
+// Rect class which defines object's hitbox
 var Rect = function(x1, y1, x2, y2) {
     this.x1 = x1;
     this.y1 = y1;
@@ -76,7 +76,7 @@ Enemy.prototype.update = function(dt) {
     }
 
     // Update the enemy's position and speed
-    // when it goes off to the right side of the canvas.
+    // when it goes outside the canvas
     if (this.x > 750) {
         this.x = randomIntWithinRange(-100, -200);
         this.speed = randomSpeed();
@@ -125,7 +125,7 @@ Player.prototype.update = function() {
     }
 };
 
-// Check if the player collides with enemy
+// Check if the player collides with an object
 Player.prototype.hit = function(obj) {
     var a = this.hitbox.moveBy(this.x, this.y);
     var b = obj.hitbox.moveBy(obj.x, obj.y);
@@ -133,26 +133,31 @@ Player.prototype.hit = function(obj) {
     return a.overlaps(b);
 };
 
+// Reset the player's position and lives after collision with an enemy
 Player.prototype.reset = function() {
     this.x = this.startX;
     this.y = this.startY;
     this.currentLives--;
 };
 
+// Set the player's previous position
 Player.prototype.setPreviousPosition = function() {
     this.previousX = this.x;
     this.previousY = this.y;
 };
 
+// Keep the player from running onto an obstacle
 Player.prototype.stay = function() {
     this.x = this.previousX;
     this.y = this.previousY;
 };
 
+// Update score when the player gets a gem
 Player.prototype.scoreUpdate = function(gem) {
     this.score += gem.gemType.point;
 };
 
+// Draw the player and the counters on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
@@ -176,6 +181,7 @@ Player.prototype.render = function() {
     ctx.fillText(scoreText, 707, 40);
 };
 
+// Make the player move or start a game according to the key pressed
 Player.prototype.handleInput = function(key) {
     this.setPreviousPosition();
 
@@ -213,6 +219,7 @@ var Rock = function(col, row) {
     this.hitbox = new Rect(7, 70, 95, 150);
 };
 
+// Draw the rock on the screen
 Rock.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -225,16 +232,19 @@ var Gem = function(col, row) {
     this.hitbox = new Rect(16, 73, 86, 150);
 };
 
+// Define gem types
 var gemTypes = [
     { point: 10, sprite: 'images/GemGreen-small.png' },
     { point: 20, sprite: 'images/GemBlue-small.png' },
     { point: 50, sprite: 'images/GemOrange-small.png' }
 ];
 
+// Draw the gem on the screen
 Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.gemType.sprite), this.x, this.y);
 };
 
+// Make gems pop up randomly on the specified rows
 Gem.prototype.randomPopUp = function() {
     var gemPopRows = [2, 3, 5, 6];
     var gemPopCols = [0, 1, 2, 3, 4, 5, 6];
@@ -248,10 +258,7 @@ Gem.prototype.randomPopUp = function() {
     this.gemType = randomElement(gemTypes);
 };
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
+// Instantiate objects
 var allEnemies = [
     new Enemy(-100, 145, 'right'),
     new Enemy(775, 228, 'left'),
