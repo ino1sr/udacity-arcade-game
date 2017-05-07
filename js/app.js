@@ -201,7 +201,7 @@ Player.prototype.handleInput = function(key) {
         case 'space':
             if (!this.isStarted) {
                 this.isStarted = true;
-            } else if (this.currentLives === 0 || this.score >= 100) {
+            } else if (this.currentLives === 0 || this.score >= 500) {
                 this.currentLives = this.maxLives;
                 this.score = 0;
             }
